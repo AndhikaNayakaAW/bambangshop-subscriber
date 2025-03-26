@@ -93,4 +93,19 @@ We use an RwLock because our application primarily performs read operations—ma
  2) In this tutorial, we used lazy_static external library to define Vec and DashMap as a “static” variable. Compared to Java where we can mutate the content of a static variable via a static function, why did not Rust allow us to do so?
  
 Rust enforces strict rules around mutability to prevent data races and ensure memory safety. Unlike Java, where static variables can be freely mutated via static methods, Rust requires careful synchronization of shared mutable data. This is why we use the lazy_static library, which safely initializes static variables (like Vec and DashMap) behind synchronization primitives. This design forces us to be explicit about how and when data is mutated, thereby maintaining safety guarantees.
+
 #### Reflection Subscriber-2
+1) Have you explored things outside of the steps in the tutorial, for example: src/lib.rs? If not, explain why you did not do so. If yes, explain things that you have learned from those other parts of code.
+ 
+I haven’t yet explored files outside the specific tutorial steps. I focused on the modules directly referenced in the tutorial—namely, the controller, service, repository, and model components—to ensure that I completed the guided tasks first. Since lib.rs wasn’t part of the initial instructions, I prioritized finishing the essential steps before venturing into additional parts of the codebase.
+
+ 
+2) Since you have completed the tutorial by now and have tried to test your notification system by spawning multiple instances of Receiver, explain how Observer pattern eases you to plug in more subscribers. How about spawning more than one instance of Main app, will it still be easy enough to add to the system?
+ 
+The Observer pattern simplifies the process of adding new subscribers. When a subscriber sends a subscription request, it’s automatically added to the system’s dictionary of subscribers for that specific topic. Later, when a notification needs to be delivered, the system iterates over the list of subscribers and dispatches the update to each one, ensuring that new subscribers are integrated seamlessly.
+
+Similarly, running multiple instances of the Main app is relatively straightforward. Each instance can be targeted by setting the appropriate APP_PUBLISHER_ROOT_URL in the Receiver. Alternatively, a routing mechanism can be implemented to direct Receivers to specific Main app instances. However, it’s important to note that if each Main app instance maintains its own static subscriber dictionary, the subscriber lists may differ across instances unless a centralized database is used to synchronize the data.
+ 
+3) Have you tried to make your own Tests, or enhance documentation on your Postman collection? If you have tried those features, tell us whether it is useful for your work (it can be your tutorial work or your Group Project).
+ 
+I haven’t yet created my own tests or enhanced the documentation in the Postman collection. My focus was on completing the tutorial tasks and implementing the required functionality. That said, I recognize that incorporating tests and detailed documentation in Postman would be valuable for verifying that the API works as intended, both for the tutorial work and for future group projects.
