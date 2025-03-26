@@ -1,3 +1,6 @@
+//src/controller/mod.rs
+pub mod notification;
+
 use rocket::fairing::AdHoc;
 
 pub fn route_stage() -> AdHoc {
